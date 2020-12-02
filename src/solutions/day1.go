@@ -36,18 +36,29 @@ func Day1Part2() {
 
 	var firstIndex int
 	var secondIndex int
+	var thirdIdnex int
 
 	for i := 0; i < len(input); i++ {
 		for j := 0; j < len(input); j++ {
+			if i == j {
+				continue
+			}
+			offset := input[i] + input[j]
+			if pos, ok := search(offset, j, len(input)-1, 2020, input); ok {
+				firstIndex = i
+				secondIndex = j
+				thirdIdnex = pos
+				break
+			}
 		}
 	}
 
-	fmt.Printf("Result: %d\n", input[firstIndex]*input[secondIndex])
+	fmt.Printf("Result: %d\n", input[firstIndex]*input[secondIndex]*input[thirdIdnex])
 }
 
 func search(i, min, max, target int, list []int) (int, bool) {
 
-	if max == min+1 {
+	if max == min+1 || min == max {
 		return -1, false
 	}
 
