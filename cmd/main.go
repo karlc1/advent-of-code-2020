@@ -8,6 +8,6 @@ import (
 
 func main() {
 	start := time.Now()
-	solutions.Day1Part2()
+	solutions.Day3Part1()
 	fmt.Printf("Elapsed time: %v", time.Since(start))
 }

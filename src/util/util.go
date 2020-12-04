@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func GetLinesAsInts(day int) []int {
+func GetLinesAsStrings(day int) []string {
 	p, err := filepath.Abs(fmt.Sprintf("input/%d.txt", day))
 	if err != nil {
 		panic("Failed to parse path: " + err.Error())
@@ -19,18 +19,28 @@ func GetLinesAsInts(day int) []int {
 	}
 	defer file.Close()
 
-	var lines []int
+	var lines []string
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		n, err := strconv.Atoi(scanner.Text())
-		if err != nil {
-			panic("Failed to parse int: " + err.Error())
-		}
-		lines = append(lines, n)
+		lines = append(lines, scanner.Text())
 	}
 
 	if err := scanner.Err(); err != nil {
 		panic("Failed to scan input: " + err.Error())
 	}
 	return lines
+}
+
+func GetLinesAsInts(day int) []int {
+	lines := GetLinesAsStrings(day)
+	ints := make([]int, len(lines), len(lines))
+
+	for i, e := range lines {
+		v, err := strconv.Atoi(e)
+		if err != nil {
+			panic("Failed to convert line input to int: " + err.Error())
+		}
+		ints[i] = v
+	}
+	return ints
 }
